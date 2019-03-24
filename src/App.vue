@@ -2,6 +2,9 @@
   <div id="app">
     <Header/>
     <Navigation/>
+    <main class="content">
+      <router-view/>
+    </main>
   </div>
 </template>
 

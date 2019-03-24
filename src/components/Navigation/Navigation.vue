@@ -1,16 +1,18 @@
 <template>
     <div class="nav-bar">
         <div class="nav-bar-content">
-            <div class="categories">
-                <span>CATEGORIES</span>
-            </div>
-            <div class="main-menu">
-                <span>HOME</span>
-                <span>SHOP</span>
-                <span>WOMEN</span>
-                <span>MEN</span>
-                <span>SALES</span>
-                <span>CATALOG</span>
+            <div class="container is-flex">
+                <div class="categories">
+                    <span>CATEGORIES</span>
+                </div>
+                <div class="main-menu">
+                    <span>HOME</span>
+                    <span>SHOP</span>
+                    <span>WOMEN</span>
+                    <span>MEN</span>
+                    <span>SALES</span>
+                    <span>CATALOG</span>
+                </div>
             </div>
         </div>
     </div>
@@ -31,7 +33,7 @@
             display: flex;
             background-color: #4A4E5A;
             color: white;
-            padding-left: 48px;
+            font-size: 24px;
 
             .main-menu {
                 padding-top: 24px;
