@@ -4,7 +4,7 @@
             <div class="header-content">
                 <img src="../../assets/logo.png">
                 <div class="control-panel">
-                    <MyAccount/>
+                    <MyAccount :like-count="0"/>
                     <MyCart/>
                 </div>
             </div>

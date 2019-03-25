@@ -45,8 +45,7 @@
         components: {CartItem},
         data() {
             return {
-                isOpen: false,
-                likeCount: 0
+                isOpen: false
             };
         },
         props: {

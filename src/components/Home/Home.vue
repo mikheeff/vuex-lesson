@@ -1,5 +1,23 @@
 <template>
     <div class="home">
+        <div class="home-section">
+            <div class="container">
+                <GallerySection
+                        v-if="popularRes"
+                        :title="'DEALS OF THE DAY'"
+                        :goods="popularRes.goods"
+                        :main-image="popularRes.mainImage"/>
+            </div>
+        </div>>
+        <div class="home-section">
+            <div class="container">
+                <GallerySection
+                        v-if="latestRes"
+                        :title="'LATEST PRODUCTS'"
+                        :goods="latestRes.goods"
+                        :main-image="latestRes.mainImage"/>
+            </div>
+        </div>
         <div class="first-section">
             <div class="container">
                 <div class="banner">
@@ -30,24 +48,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="home-section">
-            <div class="container">
-                <GallerySection
-                        v-if="popularRes"
-                        :title="'DEALS OF THE DAY'"
-                        :goods="popularRes.goods"
-                        :main-image="popularRes.mainImage"/>
-            </div>
-        </div>>
-        <div class="home-section">
-            <div class="container">
-                <GallerySection
-                        v-if="latestRes"
-                        :title="'LATEST PRODUCTS'"
-                        :goods="latestRes.goods"
-                        :main-image="latestRes.mainImage"/>
             </div>
         </div>
     </div>
@@ -89,6 +89,7 @@
     }
 
     .home {
+        padding-top: 32px;
         padding-bottom: 64px;
     }
 
