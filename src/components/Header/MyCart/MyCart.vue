@@ -16,11 +16,20 @@
         <div
             v-if="isOpen"
             class="cart-preview">
-            <div class="cart-preview-list">
+            <div
+                    v-if="goods.length"
+                    class="cart-preview-list">
                 <CartItem
+
+                        @removeFromCart="emitRemoveItemFromCart"
                         v-for="good in goods"
                         :key="good.id"
                         :good="good"/>
+            </div>
+            <div
+                    class="no-items"
+                    v-else>
+                <span class="no-items-text">No Items</span>
             </div>
             <div class="cart-controls">
                 <button class="button">
@@ -67,6 +76,9 @@
             },
             open() {
                 this.isOpen = true;
+            },
+            emitRemoveItemFromCart(id: string) {
+                this.$emit('removeFromCart', id);
             }
         }
     });
@@ -101,6 +113,22 @@
         display: flex;
         justify-content: center;
         padding-bottom: 12px;
+    }
+
+    .no-items {
+        display: flex;
+        padding-top: 36px;
+        padding-bottom: 36px;
+        align-items: center;
+        justify-content: center;
+
+        &-text {
+            font-size: 24px;
+            font-weight: 500;
+            text-transform: uppercase;
+            border-top: 1px solid #DADADA;
+            border-bottom: 1px solid #DADADA;
+        }
     }
 
 </style>

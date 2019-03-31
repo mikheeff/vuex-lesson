@@ -8,8 +8,15 @@
             <span class="gallery-item-price">${{ good.price }}</span>
             <span class="gallery-item-name">{{ good.title }}</span>
             <div class="gallery-item-button-panel">
-                <button class="button is-icon is-like"/>
-                <button class="button is-icon is-cart">Add to cart</button>
+                <button
+                        :class="{'is-active': isLiked}"
+                        @click="emitLikeProduct"
+                        class="button is-icon is-like"/>
+                <button
+                        @click="manageCart"
+                        class="button is-icon is-cart">
+                    {{ isSelected ? 'In Cart' : 'Add to Cart' }}
+                </button>
             </div>
         </div>
     </div>
@@ -18,10 +25,34 @@
 <script lang="ts">
     import Vue from 'vue';
     import {IGood} from '../../../common/interfaces/IGood';
+    import {EVENT_BUS} from '../../../common/services/ShopService';
 
     export default Vue.extend({
+        data() {
+            return {
+                isLiked: false
+            };
+        },
         props: {
-            good: Object as () => IGood,
+            good: Object as () => IGood
+        },
+        computed: {
+            isSelected(): boolean {
+                return this.$parent.$parent.$parent.$data.goods.indexOf(this.good) > -1;
+            }
+        },
+        methods: {
+            manageCart() {
+                if (this.isSelected) {
+                    this.$emit('removeFromCart', this.good.id);
+                } else {
+                    this.$emit('addToCart', this.good);
+                }
+            },
+            emitLikeProduct() {
+                EVENT_BUS.$emit('like', this.good);
+                this.isLiked = !this.isLiked;
+            }
         }
     });
 

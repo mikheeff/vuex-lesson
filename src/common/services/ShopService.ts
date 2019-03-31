@@ -1,4 +1,7 @@
+import Vue from 'vue';
 import {IGood, IGoodsResponse} from '@/common/interfaces/IGood';
+
+export const EVENT_BUS = new Vue();
 
 export const POPULAR_GOODS: IGood[] = [
     {

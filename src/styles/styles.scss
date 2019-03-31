@@ -165,6 +165,15 @@ button + button {
           background-image: url('../assets/heart-like-orange.svg');
         }
       }
+
+      &.is-active {
+        border: 1px solid #F8694A;
+        color: #F8694A;
+
+        &::before {
+          background-image: url('../assets/heart-like-orange.svg');
+        }
+      }
     }
   }
 }

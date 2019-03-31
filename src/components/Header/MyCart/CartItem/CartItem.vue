@@ -12,7 +12,7 @@
                     {{ good.title }}
                 </span>
             </div>
-            <div class="trash-icon"/>
+            <div @click.stop="emitRemoveItemFromCart" class="trash-icon"/>
         </div>
     </div>
 </template>
@@ -24,6 +24,11 @@
     export default Vue.extend({
         props: {
             good: Object as () => IGood,
+        },
+        methods: {
+            emitRemoveItemFromCart() {
+                this.$emit('removeFromCart', this.good.id);
+            }
         }
     });
 

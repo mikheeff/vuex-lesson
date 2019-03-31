@@ -21,6 +21,8 @@
                         v-for="good in goods"
                         class="column is-3">
                     <GalleryItem
+                            @removeFromCart="emitRemoveFromCart"
+                            @addToCart="emitAddToCart"
                             :good="good"/>
                 </div>
             </div>
@@ -44,6 +46,14 @@
                 type: String
             },
             goods: {} as (() => IGood[])
+        },
+        methods: {
+            emitAddToCart(good: IGood) {
+                this.$emit('addToCart', good);
+            },
+            emitRemoveFromCart(id: string) {
+                this.$emit('removeFromCart', id);
+            }
         }
     });
 

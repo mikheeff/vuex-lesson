@@ -3,6 +3,8 @@
         <div class="home-section">
             <div class="container">
                 <GallerySection
+                        @removeFromCart="emitRemoveFromCart"
+                        @addToCart="emitAddToCart"
                         v-if="popularRes"
                         :title="'DEALS OF THE DAY'"
                         :goods="popularRes.goods"
@@ -12,6 +14,8 @@
         <div class="home-section">
             <div class="container">
                 <GallerySection
+                        @removeFromCart="emitRemoveFromCart"
+                        @addToCart="emitAddToCart"
                         v-if="latestRes"
                         :title="'LATEST PRODUCTS'"
                         :goods="latestRes.goods"
@@ -57,7 +61,7 @@
     import Vue from 'vue';
     import ShopService from '../../common/services/ShopService';
     import GallerySection from '../GallerySection/GallerySection.vue'
-    import {IGoodsResponse} from '../../common/interfaces/IGood';
+    import {IGood, IGoodsResponse} from '../../common/interfaces/IGood';
 
     interface IHomeData {
         popularRes: IGoodsResponse|null;
@@ -70,6 +74,14 @@
             return {
                 popularRes: null,
                 latestRes: null
+            }
+        },
+        methods: {
+            emitAddToCart(good: IGood) {
+                this.$emit('addToCart', good);
+            },
+            emitRemoveFromCart(id: string) {
+                this.$emit('removeFromCart', id);
             }
         },
         created() {
