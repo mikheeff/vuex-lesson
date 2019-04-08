@@ -5,9 +5,7 @@
                 <img src="../../assets/logo.png">
                 <div class="control-panel">
                     <MyAccount/>
-                    <MyCart
-                            @removeFromCart="emitRemoveItemFromCart"
-                            :goods="goods"/>
+                    <MyCart/>
                 </div>
             </div>
         </div>
@@ -18,18 +16,9 @@
     import Vue from 'vue';
     import MyAccount from './MyAccount/MyAccount.vue';
     import MyCart from './MyCart/MyCart.vue'
-    import {IGood} from '../../common/interfaces/IGood';
 
     export default Vue.extend({
-        props: {
-            goods: {} as (() => IGood[])
-        },
-        components: {MyAccount, MyCart},
-        methods: {
-            emitRemoveItemFromCart(id: string) {
-                this.$emit('removeFromCart', id);
-            }
-        }
+        components: {MyAccount, MyCart}
     });
 
 </script>

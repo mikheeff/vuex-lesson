@@ -1,0 +1,2 @@
+export const GET_POPULAR_GOODS = 'GET_POPULAR_GOODS';
+export const GET_LATEST_GOODS = 'GET_LATEST_GOODS';

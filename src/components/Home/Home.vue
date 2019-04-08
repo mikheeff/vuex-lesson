@@ -3,23 +3,19 @@
         <div class="home-section">
             <div class="container">
                 <GallerySection
-                        @removeFromCart="emitRemoveFromCart"
-                        @addToCart="emitAddToCart"
-                        v-if="popularRes"
+                        v-if="popularGoods && popularGoods.length"
                         :title="'DEALS OF THE DAY'"
-                        :goods="popularRes.goods"
-                        :main-image="popularRes.mainImage"/>
+                        :goods="popularGoods"
+                        :main-image="popGoodsImage"/>
             </div>
         </div>>
         <div class="home-section">
             <div class="container">
                 <GallerySection
-                        @removeFromCart="emitRemoveFromCart"
-                        @addToCart="emitAddToCart"
-                        v-if="latestRes"
+                        v-if="latestGoods && latestGoods.length"
                         :title="'LATEST PRODUCTS'"
-                        :goods="latestRes.goods"
-                        :main-image="latestRes.mainImage"/>
+                        :goods="latestGoods"
+                        :main-image="lateGoodsImage"/>
             </div>
         </div>
         <div class="first-section">
@@ -59,36 +55,30 @@
 
 <script lang="ts">
     import Vue from 'vue';
-    import ShopService from '../../common/services/ShopService';
     import GallerySection from '../GallerySection/GallerySection.vue'
-    import {IGood, IGoodsResponse} from '../../common/interfaces/IGood';
-
-    interface IHomeData {
-        popularRes: IGoodsResponse|null;
-        latestRes: IGoodsResponse|null;
-    }
+    import {mapGetters} from 'vuex';
+    import {GET_LATEST_GOODS, GET_POPULAR_GOODS} from './store/action-types';
+    import {
+        GALLERY_LATEST_GOODS,
+        GALLERY_LATEST_GOODS_MAIN_IMAGE,
+        GALLERY_POPULAR_GOODS,
+        GALLERY_POPULAR_GOODS_MAIN_IMAGE
+    } from './store/getter-types';
 
     export default Vue.extend({
         components: {GallerySection},
-        data(): IHomeData {
-            return {
-                popularRes: null,
-                latestRes: null
-            }
-        },
-        methods: {
-            emitAddToCart(good: IGood) {
-                this.$emit('addToCart', good);
-            },
-            emitRemoveFromCart(id: string) {
-                this.$emit('removeFromCart', id);
-            }
+        computed: {
+            ...mapGetters({
+                popularGoods: GALLERY_POPULAR_GOODS,
+                popGoodsImage: GALLERY_POPULAR_GOODS_MAIN_IMAGE,
+                latestGoods: GALLERY_LATEST_GOODS,
+                lateGoodsImage: GALLERY_LATEST_GOODS_MAIN_IMAGE
+
+            })
         },
         created() {
-            ShopService.getPopularGoods()
-                .then(res => this.popularRes = res);
-            ShopService.getLatestGoods()
-                .then(res => this.latestRes = res);
+            this.$store.dispatch(GET_POPULAR_GOODS);
+            this.$store.dispatch(GET_LATEST_GOODS);
         }
     });
 

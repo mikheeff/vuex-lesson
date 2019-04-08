@@ -40,29 +40,24 @@
 <script lang="ts">
     import Vue from 'vue';
     import {OuterClick} from '../../../common/derictives/outerClick';
-    import {IGood} from '../../../common/interfaces/IGood';
-    import {EVENT_BUS} from '../../../common/services/ShopService';
+    import {mapGetters} from 'vuex';
+    import {LIKED_GOODS_COUNT} from '../store/getter-types';
 
     interface IAccountData {
         isOpen: boolean;
-        goods: IGood[];
     }
 
     export default Vue.extend({
-        mounted() {
-            EVENT_BUS.$on('like', this.toggleLike)
-        },
         directives: {OuterClick},
         data(): IAccountData {
             return {
-                isOpen: false,
-                goods: []
+                isOpen: false
             };
         },
         computed: {
-          likeCount(): number {
-              return this.goods.length;
-          }
+            ...mapGetters({
+                likeCount: LIKED_GOODS_COUNT
+            })
         },
         methods: {
             toggle() {
@@ -73,14 +68,6 @@
             },
             open() {
                 this.isOpen = true;
-            },
-            toggleLike(good: IGood) {
-                if (this.goods.indexOf(good) > -1) {
-                    this.goods = this.goods.filter((g: IGood) => g.id !== good.id);
-                    EVENT_BUS.$emit('likeRemove', good);
-                } else  {
-                    this.goods.push(good);
-                }
             }
         }
     });

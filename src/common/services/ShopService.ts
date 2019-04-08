@@ -1,9 +1,6 @@
-import Vue from 'vue';
 import {IGood, IGoodsResponse} from '@/common/interfaces/IGood';
 
-export const EVENT_BUS = new Vue();
-
-export const POPULAR_GOODS: IGood[] = [
+const POPULAR_GOODS: IGood[] = [
     {
         id: '1',
         title: 'White sandals on a block heel with a square toe RAID Wink',

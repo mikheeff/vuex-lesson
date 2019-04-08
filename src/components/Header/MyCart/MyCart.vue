@@ -11,7 +11,7 @@
         </div>
         <div class="header-action-item-info">
             <span class="header-action-item-title">My Cart</span>
-            <span class="header-action-item-subtitle">${{ totalPrice }}</span>
+            <span class="header-action-item-subtitle">${{ price }}</span>
         </div>
         <div
             v-if="isOpen"
@@ -20,8 +20,7 @@
                     v-if="goods.length"
                     class="cart-preview-list">
                 <CartItem
-
-                        @removeFromCart="emitRemoveItemFromCart"
+                        @removeFromCart="removeFromCart(good)"
                         v-for="good in goods"
                         :key="good.id"
                         :good="good"/>
@@ -46,28 +45,29 @@
 <script lang="ts">
     import Vue from 'vue';
     import {OuterClick} from '../../../common/derictives/outerClick';
-    import {IGood} from '../../../common/interfaces/IGood';
     import CartItem from './CartItem/CartItem.vue'
+    import {mapGetters, mapMutations} from 'vuex';
+    import {CART_ITEMS, CART_ITEMS_TOTAL_PRICE} from '../store/getter-types';
+    import {REMOVE_PRODUCT_FROM_CART} from '../store/mutation-types';
 
     export default Vue.extend({
         directives: {OuterClick},
         components: {CartItem},
         data() {
             return {
-                isOpen: false
+                isOpen: false,
             };
         },
-        props: {
-            goods: {} as (() => IGood[])
-        },
         computed: {
-            totalPrice(): number {
-                const initValue = 0;
-                return this.goods ? this.goods
-                    .reduce((acc: number, curGood: IGood) => acc + curGood.price, initValue) : 0;
-            }
+            ...mapGetters({
+                price: CART_ITEMS_TOTAL_PRICE,
+                goods: CART_ITEMS
+            })
         },
         methods: {
+            ...mapMutations({
+               removeFromCart: REMOVE_PRODUCT_FROM_CART
+            }),
             toggle() {
                 (this.isOpen ? this.close : this.open)();
             },
@@ -76,9 +76,6 @@
             },
             open() {
                 this.isOpen = true;
-            },
-            emitRemoveItemFromCart(id: string) {
-                this.$emit('removeFromCart', id);
             }
         }
     });
